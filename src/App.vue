@@ -2,13 +2,18 @@
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.png" />
 
-    <b-input></b-input>
+    <!-- Search Bar -->
+    <b-field label="Filtrer par nom">
+        <b-input v-model="nameFilter" rounded placeholder="Chercher joueur"></b-input>
+    </b-field>
+
+    <!-- Some options to toggle -->
     <div class="control is-flex">
         <b-switch v-model="showPoints">Montrer CPPH</b-switch>
     </div>
    
     <b-table
-          :data="players_cleaned"
+          :data="filteredPlayers"
           :bordered="true"
           :striped="true"
           :narrowed="false"
@@ -16,8 +21,8 @@
           :loading="false"
           :focusable="false"
           :mobile-cards="true"
-          default-sort="simple_points"
-          default-sort-direction="desc">
+          @click="copyLicence"
+    >
 
           <template slot-scope="props">
 
@@ -36,7 +41,7 @@
                   {{ props.row.gender }}
               </b-table-column>
 
-              <b-table-column label="Licence" class="licence" @click="copyLicence">
+              <b-table-column label="Licence" class="licence">
                   <b-icon pack="fas"
                       :icon="'id-badge'">
                   </b-icon>
@@ -69,6 +74,20 @@
 
           </template>
 
+          <template slot="empty">
+                <section class="section">
+                    <div class="content has-text-grey has-text-centered">
+                        <p>
+                            <b-icon
+                                icon="emoticon-sad"
+                                size="is-large">
+                            </b-icon>
+                        </p>
+                        <p>Aucun résultat</p>
+                    </div>
+                </section>
+            </template>
+
       </b-table>
 
   </div>
@@ -82,6 +101,7 @@ export default {
   data() {
     return {
       players,
+      nameFilter: '',
       showPoints: false
     }
   },
@@ -95,14 +115,20 @@ export default {
       })
     },
     filteredPlayers() {
-      return this.players
-    }
+      return this.players.filter(player => {
+        return player.first_name.toUpperCase().startsWith(this.nameFilter.toUpperCase()) ||
+                player.last_name.toUpperCase().startsWith(this.nameFilter.toUpperCase())
+      })
+    },
   },
   methods: {
-    copyLicence(licence_number) {
+    copyLicence(selectedPlayer) {
       console.log('OKOK MY MEN');
-      
-      console.log(licence_number)
+      navigator.clipboard.writeText(selectedPlayer.licence_number)
+      this.$toast.open({
+          message: 'Copié dans le presse papier',
+          queue: true,
+      })
     }
   }
 };
