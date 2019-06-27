@@ -1,5 +1,11 @@
 # bad18-player-page
 
+This is an In-Progress PWA SPA Application made with Vue.js.  
+It displays players from my badminton club and make search easy.  
+At the moment it uses static data (scrapped beforehand and sent as a flat file), but i hope someday i'll find a way to get dynamic data from official database.
+
+
+
 ## Project setup
 ```
 yarn install
