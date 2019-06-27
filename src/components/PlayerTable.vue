@@ -133,7 +133,7 @@
             v-if="props.row.mixed_rank.startsWith('P')"
             >{{ props.row.mixed_rank }}</b-tag
           >
-          <p v-if="showPoints">{{ props.row.double_points }}</p>
+          <p v-if="showPoints">{{ props.row.mixed_points }}</p>
         </b-table-column>
       </template>
 
