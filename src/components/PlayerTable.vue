@@ -62,24 +62,21 @@
           numeric
           centered
         >
-          <b-tag
-            type="is-danger"
-            v-if="props.row.simple_rank.startsWith('N')"
-            >{{ props.row.simple_rank }}</b-tag
-          >
-          <b-tag type="is-info" v-if="props.row.simple_rank.startsWith('R')">{{
-            props.row.simple_rank
-          }}</b-tag>
-          <b-tag
-            type="is-success"
-            v-if="props.row.simple_rank.startsWith('D')"
-            >{{ props.row.simple_rank }}</b-tag
-          >
-          <b-tag
-            type="is-warning"
-            v-if="props.row.simple_rank.startsWith('P')"
-            >{{ props.row.simple_rank }}</b-tag
-          >
+          <b-tag type="is-light" v-if="props.row.simple_rank.startsWith('NC')">
+            {{ props.row.simple_rank }}
+          </b-tag>
+          <b-tag type="is-danger" v-else-if="props.row.simple_rank.startsWith('N')">
+            {{ props.row.simple_rank }}
+          </b-tag>
+          <b-tag type="is-info" v-else-if="props.row.simple_rank.startsWith('R')">
+            {{ props.row.simple_rank }}
+          </b-tag>
+          <b-tag type="is-success" v-else-if="props.row.simple_rank.startsWith('D')">
+            {{ props.row.simple_rank }}
+          </b-tag>
+          <b-tag type="is-warning" v-else-if="props.row.simple_rank.startsWith('P')">
+            {{ props.row.simple_rank }}
+          </b-tag>
           <p v-if="showPoints">{{ props.row.simple_points }}</p>
         </b-table-column>
 
@@ -90,24 +87,21 @@
           numeric
           centered
         >
-          <b-tag
-            type="is-danger"
-            v-if="props.row.double_rank.startsWith('N')"
-            >{{ props.row.double_rank }}</b-tag
-          >
-          <b-tag type="is-info" v-if="props.row.double_rank.startsWith('R')">{{
-            props.row.double_rank
-          }}</b-tag>
-          <b-tag
-            type="is-success"
-            v-if="props.row.double_rank.startsWith('D')"
-            >{{ props.row.double_rank }}</b-tag
-          >
-          <b-tag
-            type="is-warning"
-            v-if="props.row.double_rank.startsWith('P')"
-            >{{ props.row.double_rank }}</b-tag
-          >
+          <b-tag type="is-light" v-if="props.row.double_rank.startsWith('NC')">
+            {{ props.row.double_rank }}
+          </b-tag>
+          <b-tag type="is-danger" v-else-if="props.row.double_rank.startsWith('N')">
+            {{ props.row.double_rank }}
+          </b-tag>
+          <b-tag type="is-info" v-else-if="props.row.double_rank.startsWith('R')">
+            {{ props.row.double_rank }}
+          </b-tag>
+          <b-tag type="is-success" v-else-if="props.row.double_rank.startsWith('D')">
+            {{ props.row.double_rank }}
+          </b-tag>
+          <b-tag type="is-warning" v-else-if="props.row.double_rank.startsWith('P')">
+            {{ props.row.double_rank }}
+          </b-tag>
           <p v-if="showPoints">{{ props.row.double_points }}</p>
         </b-table-column>
 
@@ -118,22 +112,21 @@
           numeric
           centered
         >
-          <b-tag type="is-danger" v-if="props.row.mixed_rank.startsWith('N')">{{
-            props.row.mixed_rank
-          }}</b-tag>
-          <b-tag type="is-info" v-if="props.row.mixed_rank.startsWith('R')">{{
-            props.row.mixed_rank
-          }}</b-tag>
-          <b-tag
-            type="is-success"
-            v-if="props.row.mixed_rank.startsWith('D')"
-            >{{ props.row.mixed_rank }}</b-tag
-          >
-          <b-tag
-            type="is-warning"
-            v-if="props.row.mixed_rank.startsWith('P')"
-            >{{ props.row.mixed_rank }}</b-tag
-          >
+          <b-tag type="is-light" v-if="props.row.mixed_rank.startsWith('NC')">
+            {{ props.row.mixed_rank }}
+          </b-tag>
+          <b-tag type="is-danger" v-else-if="props.row.mixed_rank.startsWith('N')">
+            {{ props.row.mixed_rank }}
+          </b-tag>
+          <b-tag type="is-info" v-else-if="props.row.mixed_rank.startsWith('R')">
+            {{ props.row.mixed_rank }}
+          </b-tag>
+          <b-tag type="is-success" v-else-if="props.row.mixed_rank.startsWith('D')">
+            {{ props.row.mixed_rank }}
+          </b-tag>
+          <b-tag type="is-warning" v-else-if="props.row.mixed_rank.startsWith('P')">
+            {{ props.row.mixed_rank }}
+          </b-tag>
           <p v-if="showPoints">{{ props.row.mixed_points }}</p>
         </b-table-column>
       </template>
@@ -153,6 +146,7 @@
 </template>
 
 <script>
+/* eslint-disable */
 import players from "../assets/joueurs.json";
 
 export default {
