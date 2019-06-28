@@ -3,22 +3,18 @@ import Vuex from "vuex";
 
 Vue.use(Vuex);
 
-const createStore = () => {
-  return new Vuex.Store({
-    state: {
-      currentUser: {}
-    },
-    getters: {
-      currentUser: state => {
-        return state.currentUser;
-      }
-    },
-    mutations: {
-      setCurrentUser(state, user) {
-        state.currentUser = user;
-      }
+export default new Vuex.Store({
+  state: {
+    currentUser: {}
+  },
+  getters: {
+    currentUser: state => {
+      return state.currentUser;
     }
-  });
-};
-
-export default createStore;
+  },
+  mutations: {
+    setCurrentUser(state, user) {
+      state.currentUser = user;
+    }
+  }
+});
