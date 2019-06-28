@@ -10,10 +10,15 @@
       ></b-input>
     </b-field>
 
+    <hr>
+
     <!-- Some options to toggle -->
     <div class="control is-flex">
-      <b-switch v-model="showPoints">Montrer CPPH</b-switch>
+      <b-switch v-model="showPoints">CPPH</b-switch>
+      <b-switch v-model="showGender">Genre</b-switch>
     </div>
+
+    <hr>
 
     <b-table
       :data="filteredPlayers"
@@ -25,6 +30,7 @@
       :focusable="false"
       :mobile-cards="true"
       @click="copyLicence"
+      detailed
     >
       <template slot-scope="props">
         <b-table-column field="first_name" label="Nom" centered>
@@ -35,7 +41,7 @@
           {{ props.row.last_name }}
         </b-table-column> -->
 
-        <b-table-column label="Sexe" centered sortable>
+        <b-table-column label="Sexe" centered sortable :visible="showGender">
           <b-icon
             pack="fas"
             :icon="props.row.gender === 'H' ? 'mars' : 'venus'"
@@ -141,6 +147,20 @@
           </div>
         </section>
       </template>
+
+      <template slot="detail" slot-scope="props">
+        <b-button type="is-info" @click="attachProfile(props.row)">
+          Je suis {{props.row.first_name}}
+        </b-button>
+         <b-taglist>
+            <b-tag type="is-danger">Equipe 4</b-tag>
+            <b-tag type="is-info">Second</b-tag>
+            <b-tag type="is-info">Third</b-tag>
+            <b-tag type="is-info">Fourth</b-tag>
+            <b-tag type="is-info">Fifth</b-tag>
+        </b-taglist>
+      </template>
+
     </b-table>
   </div>
 </template>
@@ -148,6 +168,7 @@
 <script>
 /* eslint-disable */
 import players from "../assets/joueurs.json";
+import { log } from 'util';
 
 export default {
   name: "playerList",
@@ -155,7 +176,8 @@ export default {
     return {
       players,
       nameFilter: "",
-      showPoints: false
+      showPoints: false,
+      showGender: true,
     };
   },
   computed: {
@@ -164,29 +186,27 @@ export default {
         player.simple_points = parseFloat(player.simple_points);
         player.double_points = parseFloat(player.double_points);
         player.mixed_points = parseFloat(player.mixed_points);
-        return player;
       });
     },
     filteredPlayers() {
       return this.players.filter(player => {
         return (
-          player.first_name
-            .toUpperCase()
-            .startsWith(this.nameFilter.toUpperCase()) ||
-          player.last_name
-            .toUpperCase()
-            .startsWith(this.nameFilter.toUpperCase())
+          player.first_name.toUpperCase().startsWith(this.nameFilter.toUpperCase()) ||
+          player.last_name.toUpperCase().startsWith(this.nameFilter.toUpperCase())
         );
       });
     }
   },
   methods: {
-    copyLicence(selectedPlayer) {
+    copyLicence(selectedPlayer) {      
       navigator.clipboard.writeText(selectedPlayer.licence_number);
       this.$toast.open({
         message: "Copié dans le presse papier",
         queue: true
       });
+    },
+    attachProfile(selectedPlayer) {
+      this.$store.commit('setCurrentUser', selectedPlayer)
     }
   }
 };

@@ -9,13 +9,12 @@
         </b-tab-item>
 
         <b-tab-item label="Mon profil" icon="account">
-          <img alt="Vue logo" src="./assets/logo.png" @click="vibrate" />
-          <span>Click on image plz</span>
-          <br />
+          <player-profile />
         </b-tab-item>
 
-        <b-tab-item label="Stats club" icon="chart-pie">
-          <span>Whatever</span>
+        <b-tab-item label="Stats" icon="chart-pie">
+          <img alt="Vue logo" src="./assets/logo.png" @click="vibrate" />
+          <span>Click on image plz</span>
         </b-tab-item>
         
       </b-tabs>
@@ -26,6 +25,7 @@
 
 <script>
 import PlayerTable from "./components/PlayerTable.vue";
+import PlayerProfile from "./components/PlayerProfile.vue"
 
 export default {
   name: "app",
@@ -35,7 +35,8 @@ export default {
     }
   },
   components: {
-    PlayerTable
+    PlayerTable,
+    PlayerProfile
   }
 };
 </script>
