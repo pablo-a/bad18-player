@@ -6,6 +6,7 @@
         v-model="nameFilter"
         rounded
         placeholder="Chercher joueur"
+        autofocus
       ></b-input>
     </b-field>
 
@@ -26,13 +27,13 @@
       @click="copyLicence"
     >
       <template slot-scope="props">
-        <b-table-column field="first_name" label="Prénom" centered>
-          {{ props.row.first_name }}
+        <b-table-column field="first_name" label="Nom" centered>
+          {{ props.row.first_name }} {{ props.row.last_name }}
         </b-table-column>
 
-        <b-table-column field="last_name" label="Nom" centered sortable>
+        <!-- <b-table-column field="last_name" label="Nom" centered sortable>
           {{ props.row.last_name }}
-        </b-table-column>
+        </b-table-column> -->
 
         <b-table-column label="Sexe" centered sortable>
           <b-icon
