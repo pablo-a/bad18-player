@@ -1,8 +1,26 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png" @click="vibrate" />
-    <br />
-    <player-table />
+
+    <template>
+      <b-tabs type="is-toggle" expanded>
+
+        <b-tab-item label="Joueurs" icon="format-list-bulleted">
+          <player-table />
+        </b-tab-item>
+
+        <b-tab-item label="Mon profil" icon="account">
+          <img alt="Vue logo" src="./assets/logo.png" @click="vibrate" />
+          <span>Click on image plz</span>
+          <br />
+        </b-tab-item>
+
+        <b-tab-item label="Stats club" icon="chart-pie">
+          <span>Whatever</span>
+        </b-tab-item>
+        
+      </b-tabs>
+    </template>
+
   </div>
 </template>
 
@@ -34,5 +52,9 @@ export default {
 
 img:hover {
   cursor: pointer;
+}
+
+nav.tabs {
+  margin: 20px;
 }
 </style>
