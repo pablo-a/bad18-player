@@ -10,7 +10,7 @@
       ></b-input>
     </b-field>
 
-    <hr>
+    <hr />
 
     <!-- Some options to toggle -->
     <div class="control is-flex">
@@ -18,7 +18,7 @@
       <b-switch v-model="showGender">Genre</b-switch>
     </div>
 
-    <hr>
+    <hr />
 
     <b-table
       :data="filteredPlayers"
@@ -68,21 +68,9 @@
           numeric
           centered
         >
-          <b-tag type="is-light" v-if="props.row.simple_rank.startsWith('NC')">
-            {{ props.row.simple_rank }}
-          </b-tag>
-          <b-tag type="is-danger" v-else-if="props.row.simple_rank.startsWith('N')">
-            {{ props.row.simple_rank }}
-          </b-tag>
-          <b-tag type="is-info" v-else-if="props.row.simple_rank.startsWith('R')">
-            {{ props.row.simple_rank }}
-          </b-tag>
-          <b-tag type="is-success" v-else-if="props.row.simple_rank.startsWith('D')">
-            {{ props.row.simple_rank }}
-          </b-tag>
-          <b-tag type="is-warning" v-else-if="props.row.simple_rank.startsWith('P')">
-            {{ props.row.simple_rank }}
-          </b-tag>
+          <b-tag :type="getRankColor(props.row.mixed_rank)">{{
+            props.row.simple_rank
+          }}</b-tag>
           <p v-if="showPoints">{{ props.row.simple_points }}</p>
         </b-table-column>
 
@@ -93,21 +81,9 @@
           numeric
           centered
         >
-          <b-tag type="is-light" v-if="props.row.double_rank.startsWith('NC')">
-            {{ props.row.double_rank }}
-          </b-tag>
-          <b-tag type="is-danger" v-else-if="props.row.double_rank.startsWith('N')">
-            {{ props.row.double_rank }}
-          </b-tag>
-          <b-tag type="is-info" v-else-if="props.row.double_rank.startsWith('R')">
-            {{ props.row.double_rank }}
-          </b-tag>
-          <b-tag type="is-success" v-else-if="props.row.double_rank.startsWith('D')">
-            {{ props.row.double_rank }}
-          </b-tag>
-          <b-tag type="is-warning" v-else-if="props.row.double_rank.startsWith('P')">
-            {{ props.row.double_rank }}
-          </b-tag>
+          <b-tag :type="getRankColor(props.row.mixed_rank)">{{
+            props.row.double_rank
+          }}</b-tag>
           <p v-if="showPoints">{{ props.row.double_points }}</p>
         </b-table-column>
 
@@ -118,21 +94,9 @@
           numeric
           centered
         >
-          <b-tag type="is-light" v-if="props.row.mixed_rank.startsWith('NC')">
-            {{ props.row.mixed_rank }}
-          </b-tag>
-          <b-tag type="is-danger" v-else-if="props.row.mixed_rank.startsWith('N')">
-            {{ props.row.mixed_rank }}
-          </b-tag>
-          <b-tag type="is-info" v-else-if="props.row.mixed_rank.startsWith('R')">
-            {{ props.row.mixed_rank }}
-          </b-tag>
-          <b-tag type="is-success" v-else-if="props.row.mixed_rank.startsWith('D')">
-            {{ props.row.mixed_rank }}
-          </b-tag>
-          <b-tag type="is-warning" v-else-if="props.row.mixed_rank.startsWith('P')">
-            {{ props.row.mixed_rank }}
-          </b-tag>
+          <b-tag :type="getRankColor(props.row.mixed_rank)">{{
+            props.row.mixed_rank
+          }}</b-tag>
           <p v-if="showPoints">{{ props.row.mixed_points }}</p>
         </b-table-column>
       </template>
@@ -143,24 +107,23 @@
             <p>
               <b-icon icon="emoticon-sad" size="is-large"> </b-icon>
             </p>
-            <p>Aucun résultat</p>
+            <p>Aucun résultats</p>
           </div>
         </section>
       </template>
 
       <template slot="detail" slot-scope="props">
         <b-button type="is-info" @click="attachProfile(props.row)">
-          Je suis {{props.row.first_name}}
+          Je suis {{ props.row.first_name }}
         </b-button>
-         <b-taglist>
-            <b-tag type="is-danger">Equipe 4</b-tag>
-            <b-tag type="is-info">Second</b-tag>
-            <b-tag type="is-info">Third</b-tag>
-            <b-tag type="is-info">Fourth</b-tag>
-            <b-tag type="is-info">Fifth</b-tag>
+        <b-taglist>
+          <b-tag type="is-danger">Equipe 4</b-tag>
+          <b-tag type="is-info">Second</b-tag>
+          <b-tag type="is-info">Third</b-tag>
+          <b-tag type="is-info">Fourth</b-tag>
+          <b-tag type="is-info">Fifth</b-tag>
         </b-taglist>
       </template>
-
     </b-table>
   </div>
 </template>
@@ -178,6 +141,21 @@ export default {
       nameFilter: "",
       showPoints: false,
       showGender: true,
+      rankToColor: {
+        'NC': 'is-light',
+        'P12': 'is-warning',
+        'P11': 'is-warning',
+        'P10': 'is-warning',
+        'D9': 'is-success',
+        'D8': 'is-success',
+        'D7': 'is-success',
+        'R6': 'is-info',
+        'R5': 'is-info',
+        'R4': 'is-info',
+        'N3': 'is-danger',
+        'N2': 'is-danger',
+        'N1': 'is-danger',
+      }
     };
   },
   computed: {
@@ -207,6 +185,9 @@ export default {
     },
     attachProfile(selectedPlayer) {
       this.$store.commit('setCurrentUser', selectedPlayer)
+    },
+    getRankColor(rank) {
+      return this.rankToColor[rank]
     }
   }
 };

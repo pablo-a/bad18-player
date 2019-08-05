@@ -1,9 +1,7 @@
 <template>
   <div id="app">
-
     <template>
       <b-tabs type="is-toggle" expanded>
-
         <b-tab-item label="Joueurs" icon="format-list-bulleted">
           <player-table />
         </b-tab-item>
@@ -16,16 +14,14 @@
           <img alt="Vue logo" src="./assets/logo.png" @click="vibrate" />
           <span>Click on image plz</span>
         </b-tab-item>
-        
       </b-tabs>
     </template>
-
   </div>
 </template>
 
 <script>
 import PlayerTable from "./components/PlayerTable.vue";
-import PlayerProfile from "./components/PlayerProfile.vue"
+import PlayerProfile from "./components/PlayerProfile.vue";
 
 export default {
   name: "app",
