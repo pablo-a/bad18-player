@@ -3,6 +3,7 @@
     <span v-if="!savedLicence">
       Je ne sais pas qui tu es... Indique le sur la page contenant la liste des
       joueurs.
+      <button class=".button" @click="getPlayerDetails">XHR request</button>
     </span>
 
     <div v-else>
@@ -20,6 +21,11 @@ export default {
     },
     userName() {
       return this.$store.getters.currentUser.first_name;
+    }
+  },
+  methods: {
+    getPlayerDetails() {
+      this.$store.dispatch('getPlayerDetails');
     }
   }
 };
