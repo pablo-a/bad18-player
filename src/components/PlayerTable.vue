@@ -26,9 +26,14 @@
       :striped="true"
       :narrowed="false"
       :hoverable="true"
-      :loading="false"
+      :loading="tableLoading"
       :focusable="false"
       :mobile-cards="true"
+      :paginated="isPaginated"
+      :per-page="perPage"
+      :current-page.sync="currentPage"
+      :pagination-simple="isPaginationSimple"
+      :pagination-position="paginationPosition"
       @click="copyLicence"
       detailed
     >
@@ -156,12 +161,19 @@ export default {
         'N3': 'is-danger',
         'N2': 'is-danger',
         'N1': 'is-danger',
-      }
+      },
+      isPaginated: true,
+      isPaginationSimple: false,
+      paginationPosition: 'bottom',
+      currentPage: 1,
+      perPage: 40
     };
   },
   created() {
+    this.tableLoading = true
     api.get('current_players').then((response) => {
       const playersCleaned = this.cleanPlayers(response.data)
+      this.tableLoading = false
       this.players = playersCleaned.sort(this.sortPlayers)
     })
   },
