@@ -68,7 +68,7 @@
           numeric
           centered
         >
-          <b-tag :type="getRankColor(props.row.mixed_rank)">{{
+          <b-tag :type="getRankColor(props.row.simple_rank)">{{
             props.row.simple_rank
           }}</b-tag>
           <p v-if="showPoints">{{ props.row.simple_points }}</p>
@@ -81,7 +81,7 @@
           numeric
           centered
         >
-          <b-tag :type="getRankColor(props.row.mixed_rank)">{{
+          <b-tag :type="getRankColor(props.row.double_rank)">{{
             props.row.double_rank
           }}</b-tag>
           <p v-if="showPoints">{{ props.row.double_points }}</p>
@@ -130,14 +130,15 @@
 
 <script>
 /* eslint-disable */
-import players from "../assets/joueurs.json";
+import api from '@/api.js';
+// import players from "../assets/joueurs.json";
 import { log } from 'util';
 
 export default {
   name: "playerList",
   data() {
     return {
-      players,
+      players: [],
       nameFilter: "",
       showPoints: false,
       showGender: true,
@@ -158,14 +159,13 @@ export default {
       }
     };
   },
+  created() {
+    api.get('current_players').then((response) => {
+      const playersCleaned = this.cleanPlayers(response.data)
+      this.players = playersCleaned.sort(this.sortPlayers)
+    })
+  },
   computed: {
-    players_cleaned() {
-      return this.players.map(player => {
-        player.simple_points = parseFloat(player.simple_points);
-        player.double_points = parseFloat(player.double_points);
-        player.mixed_points = parseFloat(player.mixed_points);
-      });
-    },
     filteredPlayers() {
       return this.players.filter(player => {
         return (
@@ -176,6 +176,20 @@ export default {
     }
   },
   methods: {
+    cleanPlayers(players) {
+      return players.map(player => {
+        let formattedPlayer = { ...player }
+        formattedPlayer.simple_points = parseFloat(player.simple_points);
+        formattedPlayer.double_points = parseFloat(player.double_points);
+        formattedPlayer.mixed_points = parseFloat(player.mixed_points);
+        return formattedPlayer
+      });
+    },
+    sortPlayers(p1, p2) {
+      const p1Score = p1.simple_points + p1.double_points + p1.mixed_points
+      const p2Score = p2.simple_points + p2.double_points + p2.mixed_points
+      return (p1Score < p2Score ? 1 : -1)
+    },
     copyLicence(selectedPlayer) {      
       navigator.clipboard.writeText(selectedPlayer.licence_number);
       this.$toast.open({

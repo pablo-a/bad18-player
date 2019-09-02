@@ -25,7 +25,7 @@ export default {
   },
   methods: {
     getPlayerDetails() {
-      this.$store.dispatch('getPlayerDetails');
+      this.$store.dispatch("getPlayerDetails");
     }
   }
 };
