@@ -171,7 +171,7 @@ export default {
   },
   created() {
     this.tableLoading = true
-    api.get('current_players').then((response) => {
+    api.get('players').then((response) => {
       const playersCleaned = this.cleanPlayers(response.data)
       this.tableLoading = false
       this.players = playersCleaned.sort(this.sortPlayers)
